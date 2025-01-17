@@ -26,7 +26,11 @@ apiKey: "AIzaSyCRRFaBrm14cIoJ1nW5knt4Afd10H402Lo",
     measurementId: "G-81DKK8YWJT"
   };
   
-  // fungsi ambil daftar pelanggan 
+//inisialisasi firebase
+const aplikasi = initializeApp(firebaseConfig)
+const basisdata = getFirestore(aplikasi)
+
+// fungsi ambil daftar pelanggan
 export async function ambilDaftarPelanggan() {
   const refDokumen = collection(basisdata, "pelanggan");
   const kueri = query(refDokumen, orderBy("nama"));
@@ -37,7 +41,7 @@ export async function ambilDaftarPelanggan() {
     hasilKueri.push({
       id: dokumen.id,
       nama: dokumen.data().nama,
-      alamat: dokumen.data(). alamat,
+      alamat: dokumen.data().alamat,
       nohape: dokumen.data().nohape
     })
   })
@@ -45,9 +49,8 @@ export async function ambilDaftarPelanggan() {
   return hasilKueri;
 }
 
-
-// fungsi menambah data pelanggan 
-export async function tambahpelangan(nama, alamat, nohape) {
+// fungsi menambah data pelanggan
+export async function tambahPelanggan(nama, alamat, nohape) {
   try {
     // menyimpan data ke firebase
     const refDokumen = await addDoc(collection(basisdata, "pelanggan"), {
@@ -57,9 +60,9 @@ export async function tambahpelangan(nama, alamat, nohape) {
     })
 
     // menampilkan pesan berhasil
-    console.log("berhasil menyimpan data pelanggan")
+    console.log('berhasil menyimpan data pelanggan')
   } catch (error) {
-    // menampilkan pesan gagal
-    console.log("gagal menyimpan data pelanggan")
+    // menampilkan pesan gagal 
+    console.log('gagal menyimpan data pelanggan')
   }
 }
